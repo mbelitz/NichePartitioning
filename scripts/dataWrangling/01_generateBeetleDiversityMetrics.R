@@ -38,8 +38,9 @@ df <- read.csv("data/neon.df.csv") %>%
 # -----------------------------------------------------------------------------
 # 2. Site coordinates from NEON distributed base plot shapefiles
 # -----------------------------------------------------------------------------
-
-plots_sf <- vect("data/All_NEON_TOS_Plots_V11/All_NEON_TOS_Plot_Polygons_V11.shp") %>%
+# note these shapefiles are ignored in repository due to large file size; 
+# must be downloaded for full reproducibility of this script
+plots_sf <- vect("data/All_NEON_TOS_Plots_V11/All_NEON_TOS_Plot_Polygons_V11.shp") %>% 
   st_as_sf()
 
 dbp <- plots_sf %>%
