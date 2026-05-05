@@ -1,0 +1,4 @@
+Questions for Katie:
+  - BARR does not have seasonLength calculation for temporal partitioning dataset; 
+  in fact not in dataset at all (time.partioning)... Why not?
+  
