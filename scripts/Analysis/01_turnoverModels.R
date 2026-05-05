@@ -112,6 +112,7 @@ mdf_tot <- mdf_temporal %>%
 write.csv(mdf_tot, "data/derivedData/partitioning_ratio.csv", row.names = FALSE)
 
 
+
 # -----------------------------------------------------------------------------
 # 2. MEM spatial filtering
 # -----------------------------------------------------------------------------
@@ -196,7 +197,13 @@ message("Selecting MEMs — partitioning ratio:")
 lm_pr_base <- lm(log(partitioning_ratio) ~ seasonLength + H_habitat,
                  data = mdf_tot)
 mems_pr <- select_mems(residuals(lm_pr_base), mdf_tot$siteID, coords_df)
-mdf_tot  <- left_join(mdf_tot, mems_pr$mem_df, by = "siteID")
+# mdf_tot inherits MEM columns from mdf_temporal; only join MEMs not already present
+new_pr_mems <- setdiff(mems_pr$mem_names, names(mdf_tot))
+if (length(new_pr_mems) > 0) {
+  mdf_tot <- left_join(mdf_tot,
+                       select(mems_pr$mem_df, siteID, all_of(new_pr_mems)),
+                       by = "siteID")
+}
 
 
 # -----------------------------------------------------------------------------
@@ -364,10 +371,10 @@ coef_plot <- function(draws_df) {
 # 6. Figures
 # -----------------------------------------------------------------------------
 
-tidy_brms(fit_temp,   "Temporal Turnover")  %>% coef_plot()
+tt <- tidy_brms(fit_temp,   "Temporal Turnover")  %>% coef_plot()
 ggsave("figures/temporalTurnover.png", width = 4, height = 3)
 
-tidy_brms(fit_space,  "Spatial Turnover")   %>% coef_plot()
+st <- tidy_brms(fit_space,  "Spatial Turnover")   %>% coef_plot()
 ggsave("figures/spatialTurnover.png",  width = 4, height = 3)
 
 tidy_brms(fit_pr_mpd, "Partitioning Ratio") %>% coef_plot()
@@ -383,3 +390,13 @@ bind_rows(
 ) %>%
   coef_plot()
 ggsave("figures/turnoverModels_allPanel.png", width = 12, height = 4)
+
+## two panel of temporal turnover and spatial turnover
+cowplot::plot_grid(tt, st, labels = c("A", "B"))
+ggsave("figures/turnoverModels_spatialTemporal.png", width = 8, height = 4)
+
+## now plus richness
+ttr <- tidy_brms(fit_temp_rich,  "Temporal Turnover\n(+ Richness)") %>% coef_plot()
+str <- tidy_brms(fit_space_rich, "Spatial Turnover\n(+ Richness)")%>% coef_plot()
+cowplot::plot_grid(ttr, str, labels = c("A", "B"))
+ggsave("figures/turnoverModels_spatialTemporal_plusRichness.png", width = 8, height = 4)
