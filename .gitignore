@@ -37,3 +37,15 @@ data/All_NEON_TOS_Plots_V11/readme_fileDescriptions.txt
 data/All_NEON_TOS_Plots_V11/TOS_decommissionedPlots.csv
 data/All_NEON_TOS_Plots_V11/TOS_versionedPoints.csv
 data/All_NEON_TOS_Plots_V11/TOS_versionedSubplots.csv
+modelOutputs/loo_family_selection.rds
+modelOutputs/fit_temporal_turnover_rich.rds
+modelOutputs/fit_temporal_turnover.rds
+modelOutputs/fit_temporal_cooccurrence.rds
+modelOutputs/fit_spatial_turnover_rich.rds
+modelOutputs/fit_spatial_turnover.rds
+modelOutputs/fit_spatial_cooccurrence.rds
+modelOutputs/fit_partitioning_ratio_mpd.rds
+modelOutputs/fit_partitioning_ratio.rds
+modelOutputs/fit_joint_cooccurrence.rds
+modelOutputs/fit_diversity_richness.rds
+modelOutputs/fit_diversity_pd.rds
