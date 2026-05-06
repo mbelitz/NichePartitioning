@@ -1,5 +1,5 @@
 "model","n_sites","observed_I","expected_I","sd_I","p_value"
-"Temporal Turnover",44,-0.1572,-0.0233,0.0823,0.1035
-"Spatial Turnover",44,-0.1201,-0.0233,0.0813,0.2341
-"Species Richness",44,0.0073,-0.0233,0.0803,0.7032
-"Phylogenetic Diversity",44,0.1796,-0.0233,0.0811,0.0123
+"Temporal Turnover",44,-0.1521,-0.0233,0.0823,0.1174
+"Spatial Turnover",44,-0.122,-0.0233,0.0814,0.2252
+"Species Richness",44,9e-04,-0.0233,0.0804,0.7639
+"Phylogenetic Diversity",44,0.1722,-0.0233,0.081,0.0158
