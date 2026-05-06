@@ -118,7 +118,6 @@ fit_tp <- do.call(brm, c(
 summary(fit_tp)
 saveRDS(fit_tp, "modelOutputs/fit_temporal_cooccurrence.rds")
 
-
 # -----------------------------------------------------------------------------
 # 5. Spatial co-occurrence model
 # -----------------------------------------------------------------------------
@@ -176,6 +175,9 @@ saveRDS(fit_joint, "modelOutputs/fit_joint_cooccurrence.rds")
 # 7. Individual model figures (temporal and spatial)
 # -----------------------------------------------------------------------------
 # Reusable helper: extract fixed effect posteriors and plot as halfeye.
+#fit_tp <- readRDS("modelOutputs/fit_temporal_cooccurrence.rds")
+#fit_sp <- readRDS('modelOutputs/fit_spatial_cooccurrence.rds')
+#fit_joint <- readRDS('modelOutputs/fit_joint_cooccurrence.rds')
 
 plot_cooccurrence <- function(fit, title) {
   as_draws_df(fit) %>%
@@ -202,13 +204,15 @@ plot_cooccurrence <- function(fit, title) {
     labs(x = "Posterior Estimate", y = NULL, title = title)
 }
 
-plot_cooccurrence(fit_tp, "Predictors of Temporal Co-occurrence")
+tpp <- plot_cooccurrence(fit_tp, "Predictors of Temporal Co-occurrence")
 ggsave("figures/temporal_coOccurrenceResults.png", width = 5, height = 4)
 
-plot_cooccurrence(fit_sp, "Predictors of Spatial Co-occurrence")
+spp <- plot_cooccurrence(fit_sp, "Predictors of Spatial Co-occurrence")
 ggsave("figures/spatial_coOccurrenceResults.png", width = 5, height = 4)
 
-
+cowplot::plot_grid(tpp, spp, labels = c("A", "B"))
+ggsave("figures/coOccurrenceModelCoefficients.png", 
+       width = 12, height = 5)
 # -----------------------------------------------------------------------------
 # 8. Joint model figure (derived process-specific effects)
 # -----------------------------------------------------------------------------
